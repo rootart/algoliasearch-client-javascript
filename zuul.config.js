@@ -1,16 +1,18 @@
 'use strict';
 
-var zuulConfig = module.exports = {
+const zuulConfig = (module.exports = {
   ui: 'tape',
-  browserify: [{
-    transform: 'bulkify'
-  }],
+  browserify: [
+    {
+      transform: 'bulkify',
+    },
+  ],
   scripts: [
     '/node_modules/jquery/dist/jquery.min.js',
     '/node_modules/jquery-ajax-transport-xdomainrequest/jquery.xdomainrequest.min.js',
     '/node_modules/angular/angular.min.js',
     // browser integration tests will use the dist file
-    '/dist/algoliasearch.min.js'
+    '/dist/algoliasearch.min.js',
   ],
   html: './test/template.html',
   server: './test/support-server/index.js',
@@ -23,18 +25,19 @@ var zuulConfig = module.exports = {
   browser_output_timeout: 60 * 3 * 1000,
   browser_open_timeout: 60 * 6 * 1000,
   // we want to be notified something is wrong asap, so no retry
-  browser_retries: 1
-};
+  browser_retries: 1,
+});
 
 if (process.env.CI === 'true') {
   zuulConfig.tunnel = {
     type: 'ngrok',
-    bind_tls: true
+    bind_tls: true,
   };
 }
 
-var browsers = require('browzers');
+const browsers = require('browzers');
 
-zuulConfig.browsers = process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false' ?
-  browsers.pullRequest :
-  browsers.all;
+zuulConfig.browsers =
+  process.env.TRAVIS_PULL_REQUEST && process.env.TRAVIS_PULL_REQUEST !== 'false'
+    ? browsers.pullRequest
+    : browsers.all;

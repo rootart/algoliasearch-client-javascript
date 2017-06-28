@@ -1,5 +1,5 @@
 module.exports = function deprecate(fn, message) {
-  var warned = false;
+  let warned = false;
 
   function deprecated() {
     if (!warned) {
